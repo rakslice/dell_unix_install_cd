@@ -1,6 +1,6 @@
 diff -ur orig/INSTALL modified/INSTALL
 --- orig/INSTALL	2021-11-21 20:11:04.000000000 -0800
-+++ modified/INSTALL	2023-11-07 23:08:39.000000000 -0800
++++ modified/INSTALL	2023-11-07 23:12:24.000000000 -0800
 @@ -1,7 +1,7 @@
  while [ 1 ]
  do
@@ -12,7 +12,7 @@ diff -ur orig/INSTALL modified/INSTALL
  	read ans
 diff -ur orig/.profile modified/.profile
 --- orig/.profile	2021-11-21 20:11:04.000000000 -0800
-+++ modified/.profile	2023-11-07 23:09:36.000000000 -0800
++++ modified/.profile	2023-11-07 23:12:25.000000000 -0800
 @@ -3,9 +3,6 @@
  echo "erase '^h' kill '^u' intr DEL"
  echo ""
@@ -25,7 +25,7 @@ diff -ur orig/.profile modified/.profile
  export PATH
 diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
 --- orig/TAPEINSTALL	2021-11-21 20:11:04.000000000 -0800
-+++ modified/TAPEINSTALL	2023-11-07 23:08:39.000000000 -0800
++++ modified/TAPEINSTALL	2023-11-07 23:26:01.000000000 -0800
 @@ -80,9 +80,6 @@
  
  if [ "$UPDATE" = "y" ]
@@ -77,7 +77,7 @@ diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
  	read ans
  	case "$ans" in
  		y*|Y*)
-@@ -149,17 +137,16 @@
+@@ -149,17 +137,17 @@
  	mkdir -p /mnt/$mount
  done
  #
@@ -92,7 +92,8 @@ diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
  /mnt/usr/sbin/setnodename -r /mnt > /dev/console
  sh TZ /mnt/etc/TIMEZONE > /dev/console
  #
-+say "Installation complete. Remove the CD before rebooting so the system will start normally."
++say "Installation complete. Remove the install CD from the drive now."
++say "The system will restart from the hard drive."
 +say "[Hit ENTER to continue] \c"
 +read ans
 +#

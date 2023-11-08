@@ -15,8 +15,9 @@ mkdir "$cddir"
 boot_floppy_image=boot.cdramd_128.img
 cp $boot_floppy_image "$cddir"
 
-./build_sys_and_base.sh
-cp sys_and_base "$cddir"
+./extract_system_fs.sh system_cd.cdramd_128.img
+cp system_fs "$cddir"
+cp base.pad.iso "$cddir/base"
 
 genisoimage -o $output_filename -sort sortfile -b $boot_floppy_image -lJR "$cddir"
 

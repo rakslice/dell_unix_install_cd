@@ -1,1 +1,2 @@
-./cd_build_dir/sys_and_base 100
+./cd_build_dir/system_fs 100
+./cd_build_dir/base 90

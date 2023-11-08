@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e -x -u
+
+[ $# -eq 2 ]
+
+
+filename="$1"
+output_filename="$2"
+
+filesize=$(stat -c %s "$filename")
+
+sector=2048
+
+sectors=$(( ($filesize + $sector - 1) / $sector )) 
+# (x + size + 1)/size  is a trick to get the ceiling of x/size
+
+newsize=$(( $sectors * $sector ))
+padsize=$(( $newsize - $filesize ))
+
+
+dd if=/dev/zero bs=$padsize count=1 | cat "$filename" - > "$output_filename"
+
+ls -l "$output_filename"

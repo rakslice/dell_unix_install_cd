@@ -1,0 +1,6 @@
+#!/sbin/sh
+
+# Check if a CD is present in the drive
+
+# This version gives SC01 console messages to even try
+[ `dd if=/dev/cd0 bs=2048 count=1 2>/dev/null | wc -c` -ne 0 ] || exit 1

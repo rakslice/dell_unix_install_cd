@@ -12,6 +12,9 @@ if [ -d "$cddir" ]; then
 fi
 mkdir "$cddir"
 
+./make_boot.sh
+./make_system.sh
+
 boot_floppy_image=boot.cdramd_128.img
 cp $boot_floppy_image "$cddir"
 

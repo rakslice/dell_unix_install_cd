@@ -3,6 +3,23 @@
 /*.img
 /*.iso
 
+/original_images/boot.img
+/original_images/system.img
+
 # intermediate files
+*.swp
+
 /cd_build_dir/
-system_fs
+/system_fs
+
+/unix
+/unix.hex
+/unix.cdramd_128
+/unix.cdramd_128.hex
+
+/boot.cdramd_128.img.hex
+
+/system_temp
+
+/mounts/orig
+/mounts/modified

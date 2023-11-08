@@ -1,0 +1,88 @@
+diff -ur orig/INSTALL modified/INSTALL
+--- orig/INSTALL	2021-11-21 20:11:04.000000000 -0800
++++ modified/INSTALL	2023-11-07 22:19:12.000000000 -0800
+@@ -1,7 +1,7 @@
+ while [ 1 ]
+ do
+ 	echo "Please specify the installation media:"
+-	echo "1) tape"
++	echo "1) cdrom"
+ 	echo "2) network code server"
+ 	echo "3) none (perform system administration)"
+ 	read ans
+diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
+--- orig/TAPEINSTALL	2021-11-21 20:11:04.000000000 -0800
++++ modified/TAPEINSTALL	2023-11-07 22:25:31.000000000 -0800
+@@ -80,9 +80,6 @@
+ 
+ if [ "$UPDATE" = "y" ]
+ then
+-	say "Insert the installation tape [Hit ENTER to continue] \c"
+-	read ans
+-	#
+ 	say "re-initializing / file system ..."
+ 	/etc/fs/ufs/mkfs /dev/rdsk/0s1 || fail
+ 	say "re-initializing /stand file system ..."
+@@ -97,17 +94,11 @@
+ 	/etc/fs/bfs/mount /dev/dsk/0s10 /mnt/stand || fail
+ elif [ "$DEFAULT_CONFIGURATION" = "y" ]
+ then
+-	say "Insert the installation tape [Hit ENTER to continue] \c"
+-	read ans
+-	#
+ 	disks -o /tmp/disks > /dev/console 2>&1 || fail
+ 	dellsetup -a `cat /tmp/disks` > /dev/console 2>&1 || fail
+ else
+ 	disks -o /tmp/disks > /dev/console 2>&1 || fail
+ 	dellsetup `cat /tmp/disks` > /dev/console 2>&1 || fail
+-	#
+-	say "Insert the installation tape [Hit ENTER to continue] \c"
+-	read ans
+ fi
+ 
+ # fill in the file systems
+@@ -115,18 +106,15 @@
+ cd /mnt
+ while [ 1 ]
+ do
+-	say "Rewinding... \c"
+-	tapecntl -r /dev/rmt/c0s0
+-	say "Retensioning... \c"
+-	tapecntl -t /dev/rmt/c0s0
+-	say "Loading..."
+-	mtio -b 64k -f /mnt/junk -v 2> /dev/console -i /dev/rmt/c0s0 | cpio -icdmuD
++	say "Installing base system from CD cpio archive..."
++        # first file offset 32 blocks + ramdisk image 711 blocks = start of cpio archive 743 blocks
++	dd if=/dev/cd0 bs=2048 skip=743 | cpio -icdmuvD
+ 	if [ $? = 0 ]
+ 	then
+ 		break
+ 	fi
+ 	say ""
+-	say "Installation from the tape failed.  Do you wish to retry? \c"
++	say "Installation from the cd failed.  Do you wish to retry? \c"
+ 	read ans
+ 	case "$ans" in
+ 		y*|Y*)
+@@ -149,17 +137,16 @@
+ 	mkdir -p /mnt/$mount
+ done
+ #
+-# do an explicit rewind to wait for the tape
+-say "Rewinding ...\c"
+-tapecntl -w /dev/rmt/c0s0
+-say ""
+-#
+ # install the bootstrap
+ dellboot /mnt/etc/boot /dev/rdsk/0s0
+ #
+ /mnt/usr/sbin/setnodename -r /mnt > /dev/console
+ sh TZ /mnt/etc/TIMEZONE > /dev/console
+ #
++say "Installation complete. Remove the CD before reooting so the system will start normally."
++say "[Hit ENTER to continue] \c"
++read ans
++#
+ sync;sync;sync
+ umount /mnt/home
+ umount /mnt/stand

@@ -26,6 +26,10 @@ cp $boot_floppy_image "$cddir"
 ./extract_system_fs.sh system_cd.cdramd_128.img
 cp system_fs "$cddir"
 
+if [ -d additional_contents ]; then
+	cp -r additional_contents/* "$cddir"
+fi
+
 genisoimage -o $output_filename -sort sortfile -b $boot_floppy_image -lJR "$cddir"
 
 # double-check things we want to be at specific fixed locations

@@ -1,0 +1,16 @@
+Scripts to create a Dell Unix installation CD.
+
+This scripts setup is for use on a Linux system with `genisoimage`, `xxd`, etc.
+
+The resulting CD will work on a system with an Dell Unix compatible SCSI controller
+(i.e. AHA-154x) with a CD drive attached to it.
+
+Instructions:
+
+1. Put the `boot.img` and `system.img` floppy disk images into `original_images`
+2. Put the base system cpio archive, as a file called `base`, into `original_images`
+3. If you have anything else you want on the CD for convenience (e.g. other packages),
+   put make a directory called `additional_contents` in the checkout directory and
+   put them in.
+4. Run `./make_iso.bash`
+5. The resulting ISO will be `dell_unix.iso` in the checkout directory.

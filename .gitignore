@@ -7,6 +7,8 @@
 /original_images/system.img
 /original_images/base
 
+/additional_contents
+
 # intermediate files
 *.swp
 

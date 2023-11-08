@@ -8,6 +8,10 @@ input_filename=original_images/system.img
 
 [ -f $input_filename ]
 
+if [ -f $output_filename ]; then
+	rm $output_filename
+fi
+
 cp $input_filename $output_filename
 chmod +w $output_filename
 

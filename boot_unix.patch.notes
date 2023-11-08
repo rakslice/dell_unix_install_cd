@@ -6,9 +6,9 @@ In the ramd_info array in .data right near the end of the strings:
 - Change the size of the ramdisk up slightly to 0x128800, a multiple of 2048 bytes.
   I've found in testing that this is necessary on some 154x-compatible VMs
 
-In the code where the struct buf is being populated for the call to the block 
+In the code where the struct buf is being populated for the call to the block
 device's b_strategy
-- Set the b_blkno, the offset in 512-byte blocks the ramdisk image will be read 
+- Set the b_blkno, the offset in 512-byte blocks the ramdisk image will be read
   from, to the value we want for the cd, 0x80 (128)
 - Just clobber the setting of b_sector (we need the space for the other change
   and for sc01 it is going to calculate its own sector from the b_blkno anyway)

@@ -1,18 +1,43 @@
 diff -ur orig/INSTALL modified/INSTALL
 --- orig/INSTALL	2021-11-21 20:11:04.000000000 -0800
-+++ modified/INSTALL	2023-11-07 23:12:24.000000000 -0800
-@@ -1,7 +1,7 @@
++++ modified/INSTALL	2023-11-07 23:40:12.000000000 -0800
+@@ -1,8 +1,8 @@
  while [ 1 ]
  do
  	echo "Please specify the installation media:"
 -	echo "1) tape"
+-	echo "2) network code server"
 +	echo "1) cdrom"
- 	echo "2) network code server"
++	#echo "2) network code server"
  	echo "3) none (perform system administration)"
  	read ans
+ 	case $ans in
+@@ -10,7 +10,7 @@
+ 			# TAPEINSTALL 2>&1 | trace -s 9600 /dev/tty01
+ 			break
+ 			;;
+-		"2")
++		"N")
+ 			echo "Insert the INET installation diskette [hit ENTER to continue] ...\c"
+ 			read foo
+ 			/etc/fs/s5/mount /dev/ramd2 /install > /dev/null 2>&1
+@@ -30,11 +30,11 @@
+ 			umount /install
+ 			break
+ 			;;
+-		"3")
++		"2")
+ 			exit 0
+ 			;;
+ 		"*")
+-			echo "Please enter \"1\", \"2\" or \"3\"."
++			echo "Please enter \"1\" or \"2\"."
+ 			continue
+ 			;;
+ 	esac
 diff -ur orig/.profile modified/.profile
 --- orig/.profile	2021-11-21 20:11:04.000000000 -0800
-+++ modified/.profile	2023-11-07 23:12:25.000000000 -0800
++++ modified/.profile	2023-11-07 23:27:02.000000000 -0800
 @@ -3,9 +3,6 @@
  echo "erase '^h' kill '^u' intr DEL"
  echo ""
@@ -25,7 +50,7 @@ diff -ur orig/.profile modified/.profile
  export PATH
 diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
 --- orig/TAPEINSTALL	2021-11-21 20:11:04.000000000 -0800
-+++ modified/TAPEINSTALL	2023-11-07 23:26:01.000000000 -0800
++++ modified/TAPEINSTALL	2023-11-07 23:27:02.000000000 -0800
 @@ -80,9 +80,6 @@
  
  if [ "$UPDATE" = "y" ]

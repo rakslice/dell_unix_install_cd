@@ -1,14 +1,31 @@
-The patch for the BOOT disk /unix kernel has three changes
-so that the SYSTEM ramdisk can be loaded from CD:
+The patch for the BOOT disk /unix kernel makes three changes,
+so that the SYSTEM ramdisk is loaded from CD:
 
-In the ramd_info array in .data right near the end of the strings:
-- Change the block device the ramdisk will be loaded from to 2 0 (the cd0 device)
-- Change the size of the ramdisk up slightly to 0x128800, a multiple of 2048 bytes.
-  I've found in testing that this is necessary on some 154x-compatible VMs
+In the .data section, in the ramd_info array right near the end of the strings,
 
-In the code where the struct buf is being populated for the call to the block
-device's b_strategy
-- Set the b_blkno, the offset in 512-byte blocks the ramdisk image will be read
-  from, to the value we want for the cd, 0x80 (128)
-- Just clobber the setting of b_sector (we need the space for the other change
-  and for sc01 it is going to calculate its own sector from the b_blkno anyway)
+- Change the size of the ramdisk up slightly to 0x128800 bytes, a multiple of 2048.
+  I've found in testing that this avoids errors with a non-2048-byte final read
+  on some VMs with fresh-off-the-drawing-board AHA-154x-compatible SCSI
+
+    0x107454: 0084 1200 -> 0088 1200
+
+- Change the block device the ramdisk will be loaded from to major 2 minor 0 (the cd0 device)
+
+    0x10745c: 0100 0000 8400 0000 -> 0200 0000 0000 0000
+
+In the ramdisk device code that loads an image from the actual disk (ramd.c ramd_issue_read),
+at the point where a series of values are being copied into a struct buf to prepare for the 
+disk read using b_strategy,
+
+- Set the disk offset in 512-byte blocks the ramdisk image will be read from (b_blkno),
+  to the place where we have the image on the CD, 0x80 (128). Just clobber the instruction 
+  after that which sets b_sector; we can use the space for our change, and for the CD driver
+  (sc01.c) b_strategy it is just going to ignore the b_sector value and calculate its own 
+  from the b_blkno anyway.
+
+    0x6ad79: 89 8a 8c cb 15 d0   89 8a 98 cb 15 d0  ->
+             c7 82 8c cb 15 d0 80 00 00 00   90  90
+
+             (mov %ecx,...    ->   mov $0x80,...)
+              mov %ecx,...         nop
+                                   nop

@@ -1,6 +1,8 @@
 The patch for the BOOT disk /unix kernel makes three changes,
 so that the SYSTEM ramdisk is loaded from CD:
 
+(the examples are for the one with sha256sum cfbf3f09c2bfe49eb3ad9aac74a69ec2f78a07d4b59ac99ee0ee01f525b9dbdf)
+
 In the .data section, in the ramd_info array right near the end of the strings,
 
 - Change the size of the ramdisk up slightly to 0x128800 bytes, a multiple of 2048.

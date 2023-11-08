@@ -24,13 +24,18 @@ cp mounts/orig/unix .
 
 sudo umount mounts/orig
 
-diff - <(sha256sum unix) <<< "cfbf3f09c2bfe49eb3ad9aac74a69ec2f78a07d4b59ac99ee0ee01f525b9dbdf  unix" 
+unix_hash=$(sha256sum unix | cut -d' ' -f1)
+
+unix_patch=boot_unix.$unix_hash.patch
+
+[ -f $unix_patch ]
+
 
 xxd unix > unix.hex
 
 cp unix.hex unix.cdramd_128.hex
 
-patch unix.cdramd_128.hex boot_unix.patch
+patch unix.cdramd_128.hex $unix_patch
 
 xxd -r unix.cdramd_128.hex > unix.cdramd_128
 

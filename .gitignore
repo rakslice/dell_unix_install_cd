@@ -1,0 +1,9 @@
+
+# input and output files
+/*.img
+/*.iso
+
+# intermediate files
+/cd_build_dir/
+system_fs
+sys_and_base

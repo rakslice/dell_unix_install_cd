@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e -x -u -o pipefail
 
-output_filename=tester.iso
+output_filename=dell_unix.iso
 
 # the dir where we're building the cd contents
 cddir=./cd_build_dir
@@ -36,7 +36,7 @@ genisoimage -o $output_filename -sort sortfile -b $boot_floppy_image -lJR "$cddi
 # system fs
 #  offset=64k bytes, 32 2k blocks
 system_fs_offset=32
-#  length=711 2k blocks (the fs is only 593 but it is padded to 711 to fit the disk)
+#  length=711 2k blocks (the fs is only 593 but it is padded to 711 to fit its floppy disk)
 system_fs_blocks=711
 dd if=$output_filename bs=2048 skip=$system_fs_offset count=$system_fs_blocks | diff - system_fs
 

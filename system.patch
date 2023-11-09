@@ -92,7 +92,7 @@ diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
 -	mtio -b 64k -f /mnt/junk -v 2> /dev/console -i /dev/rmt/c0s0 | cpio -icdmuD
 +	say "Installing base system from CD cpio archive..."
 +        # first file offset 32 blocks + ramdisk image 711 blocks = start of cpio archive 743 blocks
-+	dd if=/dev/cd0 bs=2048 skip=743 | cpio -icdmuvD
++	dd if=/dev/cd0 bs=2048 skip=743 | cpio -icdmuD
  	if [ $? = 0 ]
  	then
  		break

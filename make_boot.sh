@@ -48,6 +48,8 @@ sudo cp unix.cdramd_128 mounts/modified/unix
 sudo umount mounts/modified
 
 xxd $output_filename | sed 's/0\([0-9a-f]\{7\}\):/\1:/' > $output_filename.hex
-patch $output_filename.hex boot_loader.patch
+# for now the other boot file patch is just changing a message,
+# ignore it if it doesn't apply
+patch $output_filename.hex boot_loader.patch || true
 xxd -r $output_filename.hex > $output_filename
 

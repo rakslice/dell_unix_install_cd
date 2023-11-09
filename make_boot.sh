@@ -8,7 +8,7 @@ input_filename=original_images/boot.img
 
 [ -f $input_filename ]
 
-if [ -f $output_filename]; then
+if [ -f $output_filename ]; then
 	rm $output_filename
 fi
 cp $input_filename $output_filename

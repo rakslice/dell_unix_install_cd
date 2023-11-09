@@ -30,8 +30,9 @@ unix_patch=boot_unix.$unix_hash.patch
 
 [ -f $unix_patch ]
 
-
-xxd unix > unix.hex
+# the sed gets us rid of the 8-digit address munge versions that
+# don't even match the manpage
+xxd unix | sed 's/0\([0-9a-f]\{7\}\):/\1:/' > unix.hex
 
 cp unix.hex unix.cdramd_128.hex
 
@@ -46,7 +47,7 @@ sudo cp unix.cdramd_128 mounts/modified/unix
 #ls -lR mounts/modified
 sudo umount mounts/modified
 
-xxd $output_filename > $output_filename.hex
+xxd $output_filename | sed 's/0\([0-9a-f]\{7\}\):/\1:/' > $output_filename.hex
 patch $output_filename.hex boot_loader.patch
 xxd -r $output_filename.hex > $output_filename
 

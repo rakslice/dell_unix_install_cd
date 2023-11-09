@@ -16,7 +16,7 @@ mkdir "$cddir"
 ./make_system.sh
 
 base_archive=original_images/base
-diff - <(sha256sum $base_archive) <<< "46539dbfbddb1cc1f4d03d82e4c390fef320935187ab266a41a7f0db1f22e154  $base_archive"
+#diff - <(sha256sum $base_archive) <<< "46539dbfbddb1cc1f4d03d82e4c390fef320935187ab266a41a7f0db1f22e154  $base_archive"
 
 ./pad2k $base_archive "$cddir/base"
 

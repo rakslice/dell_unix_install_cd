@@ -99,7 +99,7 @@ diff -ur orig/TAPEINSTALL modified/TAPEINSTALL
  	fi
  	say ""
 -	say "Installation from the tape failed.  Do you wish to retry? \c"
-+	say "Installation from the cd failed.  Do you wish to retry? \c"
++	say "Installation from the CD failed.  Do you wish to retry? \c"
  	read ans
  	case "$ans" in
  		y*|Y*)

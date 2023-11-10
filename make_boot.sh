@@ -30,8 +30,8 @@ unix_patch=boot_unix.$unix_hash.patch
 
 [ -f $unix_patch ]
 
-# the sed gets us rid of the 8-digit address munge versions that
-# don't even match the manpage
+# the sed munges 8-digit address output of certain xxd's that
+# don't even match their manpages
 xxd unix | sed 's/0\([0-9a-f]\{7\}\):/\1:/' > unix.hex
 
 cp unix.hex unix.cdramd_128.hex

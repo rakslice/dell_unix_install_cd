@@ -27,7 +27,9 @@ cp $boot_floppy_image "$cddir"
 cp system_fs "$cddir"
 
 if [ -d additional_contents ]; then
-	cp -r additional_contents/* "$cddir"
+    find additional_contents -mindepth 1 -maxdepth 1 | while read filename; do
+	    cp -r "$filename" "$cddir"
+    done
 fi
 
 genisoimage -o $output_filename -sort sortfile -b $boot_floppy_image -lJR "$cddir"

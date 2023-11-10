@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e -u -x
+
+vm_name="$1"
+vboxmanage setextradata "$vm_name" VBoxInternal/Devices/buslogic/0/Config/AdapterType "AHA-1540B"
+vboxmanage setextradata "$vm_name" VBoxInternal/Devices/buslogic/0/Config/ISACompat "Primary" # use io address 0x330 instead of 0x334
+
+vboxmanage modifyvm "$vm_name" --nictype1=wd8013
+vboxmanage setextradata "$vm_name" VBoxInternal/Devices/dp8390/0/Config/IRQ 5
+# default resource settings are otherwise the ones we need
+
+

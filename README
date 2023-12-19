@@ -6,9 +6,8 @@ The resulting CD will work on a system with an Dell Unix compatible SCSI control
 (i.e. AHA-154x) with a CD drive attached to it.
 
 If the SCSI BIOS knows how to boot an El Torito bootable CD (w/ floppy emulation),
-it can boot from the CD all on its own; otherwise you can provide the CD's
-`boot.cdramd_128.img` floppy along with the CD to get the kernel running and its
-driver will take care of the rest.
+it can boot from the CD all on its own; otherwise you can write the CD's
+`boot.cdramd_128.img` to a floppy and use it along with the CD.
 
 Instructions:
 
